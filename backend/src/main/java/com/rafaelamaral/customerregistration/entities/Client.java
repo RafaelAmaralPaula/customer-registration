@@ -20,6 +20,7 @@ public class Client implements Serializable {
 
     private Double income;
 
+    @Column(name = "birth_date")
     private Instant birthDate;
 
     private Integer children;
