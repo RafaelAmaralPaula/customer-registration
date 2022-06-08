@@ -1,5 +1,6 @@
 package com.rafaelamaral.customerregistration.resources.exceptions;
 
+import com.rafaelamaral.customerregistration.services.exceptions.DataBaseException;
 import com.rafaelamaral.customerregistration.services.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<StandardError> resourceNotFoundException(ResourceNotFoundException ex , HttpServletRequest request){
-        StandardError error = new StandardError();
         HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError error = new StandardError();
         error.setTimesStamp(Instant.now());
         error.setStatus(status.value());
         error.setError("Resource not found");
@@ -24,6 +25,19 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
 
+    }
+
+    @ExceptionHandler(DataBaseException.class)
+    public ResponseEntity<StandardError> dataBaseException(DataBaseException ex , HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+        error.setTimesStamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("DataBase Exception");
+        error.setMessage(ex.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
     }
 
 }

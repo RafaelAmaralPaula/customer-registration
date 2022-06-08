@@ -2,6 +2,7 @@ package com.rafaelamaral.customerregistration.dto;
 
 import com.rafaelamaral.customerregistration.entities.Client;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -85,4 +86,6 @@ public class ClientDTO implements Serializable {
     public void setChildren(Integer children) {
         this.children = children;
     }
+
+
 }
